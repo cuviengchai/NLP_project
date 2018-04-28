@@ -3,6 +3,9 @@ import yaml
 
 client = discord.Client()
 
+#Type of Greeting
+greeting = ['hello','hi','สวัสดี','ดี']
+
 @client.event
 async def on_ready():
     print('Logged in as')
@@ -13,15 +16,16 @@ async def on_ready():
 @client.event
 async def on_message(message):
     # ignore own message
-    print(message)
-    
     if message.author == client.user:
         return
     if message.content == 'ping':
-        await client.send_message(message.channel, 'pong')
+        return await client.send_message(message.channel, 'pong')
+    if message.content.lower() in greeting :
+        return await client.send_message(message.channel, 'ดี {0.author.mention}'.format(message))
     if message.content.startswith('!hello'):
         msg = 'Hello {0.author.mention}'.format(message)
-        await client.send_message(message.channel, msg)
+        return await client.send_message(message.channel, msg)
+    return await client.send_message(message.channel, "ไม่รู้อ่ะ 555")
 
 
 
